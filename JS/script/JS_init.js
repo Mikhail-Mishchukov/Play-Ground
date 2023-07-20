@@ -1,4 +1,3 @@
-// Function has to get value and which type to convert
 export function typeConvert(value, type) {
     switch (type) {
         case 'string':
@@ -23,8 +22,8 @@ export function checkIncrementWorks(counter, type) {
     }
     return 0;
 }
-const value = 2;
-console.log(checkIncrementWorks(value, 'Post'));
+// const value = 2;
+// console.log(checkIncrementWorks(value, 'Post'));
 
 export function isFirstValueBiggerThanSecondValue(value1, value2) {
     if (
@@ -63,8 +62,6 @@ export function compareNumberWithZero(value) {
     return 0;
 }
 
-//https://learn.javascript.ru/ifelse
-
 export function checkPassword(value) {
     if (!value || typeof value !== 'number') {
         return null;
@@ -100,26 +97,29 @@ export function inputNumberGreaterThan100(value) {
     }
 }
 
-// Вывести простые числа
-// Натуральное число, большее 1, называется простым, если оно ни на что не делится, кроме себя и 1.
-// Другими словами, n > 1 – простое, если при его делении на любое число кроме 1 и n есть остаток.
-// Например, 5 это простое число, оно не может быть разделено без остатка на 2, 3 и 4.
-// Напишите код, который выводит все простые числа из интервала от 2 до n.
-// Для n = 10 результат должен быть 2,3,5,7.
-// P.S. Код также должен легко модифицироваться для любых других интервалов.
+//Algorithm can be optimized: Quadratic sieve algorithm, General number field sieve,
 
 export function getPrimeNumbers(toNumber) {
-    if (!toNumber && typeof toNumber !== 'number' && toNumber < 2) return null;
+    if (typeof toNumber !== 'number' || toNumber < 2) return null;
 
     const result = [];
 
-    for (let i = 2; i < toNumber; i++) {
-        let dividerCount = 0;
-        for (let j = 2; j < i; j++) {
-            if (i % j === 0) ++dividerCount;
-            if (dividerCount > 1) {
-                break;
-            }
+    primaryCycle: for (let i = 2; i <= toNumber; i++) {
+        for (let j = 2; j < Math.sqrt(i); j++) {
+            if (i % j === 0) continue primaryCycle;
         }
+
+        result.push(i);
     }
+
+    return result;
+}
+//https://learn.javascript.ru/function-basics
+
+export function min(a, b) {
+    return a > b ? b : a;
+}
+export function pow(x, n) {
+    if (n < 1) return null;
+    return x ** n;
 }
