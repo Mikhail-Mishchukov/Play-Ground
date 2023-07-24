@@ -114,12 +114,62 @@ export function getPrimeNumbers(toNumber) {
 
     return result;
 }
-//https://learn.javascript.ru/function-basics
 
 export function min(a, b) {
     return a > b ? b : a;
 }
-export function pow(x, n) {
-    if (n < 1) return null;
-    return x ** n;
+
+const pow = function (x, n) {
+    if (x === 0) return 0;
+
+    if (n > 0) {
+        return x ** n;
+    }
+
+    return 1 / x ** Math.abs(n);
+};
+
+/**Write a function that checks if a given value is an instance of a given class or superclass. For this problem, an object is considered an instance of a given class if that object has access to that class's methods.
+
+There are no constraints on the data types that can be passed to the function. For example, the value or the class could be undefined. */
+/**
+Example 1:
+ 
+Input: func = () => checkIfInstanceOf(new Date(), Date)
+Output: true
+Explanation: The object returned by the Date constructor is, by definition, an instance of Date.
+
+Example 2:
+
+Input: func = () => { class Animal {}; class Dog extends Animal {}; return checkIfInstanceOf(new Dog(), Animal); }
+Output: true
+Explanation:
+class Animal {};
+class Dog extends Animal {};
+checkIfInstanceOf(new Dog(), Animal); // true
+
+Dog is a subclass of Animal. Therefore, a Dog object is an instance of both Dog and Animal.
+
+Example 4:
+
+Input: func = () => checkIfInstanceOf(5, Number)
+Output: true
+Explanation: 5 is a Number. Note that the "instanceof" keyword would return false. 
+However, it is still considered an instance of Number because it accesses the Number methods. For example "toFixed()".
+ */
+function checkIfInstanceOf(obj, classFunction) {
+    if (typeof obj === 'object') return obj instanceof classFunction;
+    console.log('obj', typeof obj);
+    if (typeof obj === 'number')
+        return classFunction.constructor.name === 'Number';
+    console.log('obj', typeof obj);
+
+    return;
 }
+
+console.log('Number', typeof Number);
+class Animal {}
+class Dog extends Animal {}
+console.log(checkIfInstanceOf(new Dog(), Animal));
+console.log(checkIfInstanceOf(new Date(), Date));
+console.log(checkIfInstanceOf(5, Number));
