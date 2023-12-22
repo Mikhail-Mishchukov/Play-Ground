@@ -1,5 +1,7 @@
 import stylex, { StyleXStyles } from "@stylexjs/stylex";
 import { useState } from "react";
+import { colors } from "../Theme/Tokens.stylex";
+import { useTheme } from "../Context/ThemeContext";
 
 const moving = stylex.keyframes({
   "0%": { transform: "translateX(-50%)" },
@@ -32,54 +34,54 @@ const buttonStyles = stylex.create({
     animationDuration: `${animationDuration}s`,
   }),
   primary: {
-    color: "white",
-    backgroundColor: "#9873FF",
+    color: colors.primaryText,
+    backgroundColor: colors.backgroundPrimary,
     ":hover": {
-      backgroundColor: "#B89EFF",
+      backgroundColor: colors.backgroundPrimaryHover,
       borderColor: "#B89EFF",
     },
     ":active": {
-      backgroundColor: "#8052FF",
+      backgroundColor: colors.backgroundPrimaryActive,
       borderColor: "#8052FF",
     },
     ":disabled": {
-      backgroundColor: "#C8C5D1",
+      backgroundColor: colors.backgroundPrimaryDisabled,
       borderColor: "#C8C5D1",
       animationName: null,
       ":hover": {
-        backgroundColor: "#C8C5D1",
+        backgroundColor: colors.backgroundPrimaryDisabled,
         borderColor: "#C8C5D1",
       },
       ":active": {
-        backgroundColor: "#C8C5D1",
+        backgroundColor: colors.backgroundPrimaryDisabled,
         borderColor: "#C8C5D1",
       },
     },
   },
   secondary: {
-    color: "#9873FF",
-    backgroundColor: "white",
+    color: colors.secondaryText,
+    backgroundColor: colors.backgroundSecondary,
 
     ":hover": {
-      color: "white",
-      backgroundColor: "#B89EFF",
+      color: colors.secondaryTextHover,
+      backgroundColor: colors.backgroundSecondaryHover,
     },
     ":active": {
-      color: "white",
-      backgroundColor: "#8052FF",
+      color: colors.secondaryTextActive,
+      backgroundColor: colors.backgroundSecondaryActive,
     },
     ":disabled": {
-      color: "#C8C5D1",
-      backgroundColor: "white",
+      color: colors.secondaryTextDisabled,
+      backgroundColor: colors.backgroundSecondaryDisabled,
       borderColor: "#C8C5D1",
       ":hover": {
-        color: "#C8C5D1",
-        backgroundColor: "white",
+        color: colors.secondaryTextDisabled,
+        backgroundColor: colors.backgroundSecondaryDisabled,
         borderColor: "#C8C5D1",
       },
       ":active": {
-        color: "#C8C5D1",
-        backgroundColor: "white",
+        color: colors.secondaryTextDisabled,
+        backgroundColor: colors.backgroundSecondaryDisabled,
         borderColor: "#C8C5D1",
       },
     },
@@ -96,11 +98,14 @@ export function Button({ buttonClass }: ButtonProps) {
   const [buttonVariant, setButtonVariant] = useState<ButtonVariant>("primary");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [animationDuration, setAnimationDuration] = useState(2);
+
+  const { theme } = useTheme();
   return (
     <>
       <button
         disabled={isButtonDisabled}
         {...stylex.props(
+          theme,
           buttonStyles.buttonReset,
           buttonStyles.button,
           buttonStyles.animationDurationClass(animationDuration),

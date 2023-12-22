@@ -1,5 +1,6 @@
 import stylex from "@stylexjs/stylex";
 import { Button } from "./Components/Button";
+import { useTheme } from "./Context/ThemeContext";
 
 const containerStyles = stylex.create({
   container: {
@@ -17,11 +18,13 @@ const buttonStyle = stylex.create({
   button: {
     //It looks like it doesn't work properly with pseudo elements and class
     //It actually works, but the ts is raising an error
+    //The error disappears when there is at least one rule
+    textAlign: "left",
     [":before"]: {
-      content: "External Style",
-      position: "absolutely",
-      top: -10,
-      left: -10,
+      content: "Hello from parent",
+      position: "absolute",
+      top: "-8%",
+      left: 0,
     },
   },
 });
@@ -47,6 +50,14 @@ const buttonStyle = stylex.create({
 // });
 
 function App() {
+  const { setTheme } = useTheme();
+
+  const onTurnLightMode = () => {
+    setTheme("light");
+  };
+  const onTurnDarkMode = () => {
+    setTheme("dark");
+  };
   return (
     <div {...stylex.props(containerStyles.container)}>
       <Button buttonClass={buttonStyle.button} />
@@ -54,6 +65,8 @@ function App() {
         {...stylex.props(inputStyles.resetInputStyles, inputStyles.baseStyles)}
         placeholder="Placeholder"
       ></input> */}
+      <button onClick={onTurnLightMode}>Turn on Light mode</button>
+      <button onClick={onTurnDarkMode}>Turn on Dark mode</button>
     </div>
   );
 }
